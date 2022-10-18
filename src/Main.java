@@ -1,8 +1,10 @@
 public class Main {
+
     public static void main(String[] args) {
         int[] arr = {0, 9, 10, 3, 1, 5, 2};
-        int[] sortArr = Sort.quick(arr, 0, arr.length - 1);
-        for (int x : sortArr) {
+        int[] src = new int[arr.length];
+        Sort.merge(arr, src, 0, arr.length - 1);
+        for (int x : arr) {
             System.out.println(x);
         }
     }
@@ -97,4 +99,31 @@ class Sort {
         return arr;
     }
 
+
+    public static void merge(int[] arr, int[] src, int s, int e) {
+        if (s < e) {
+            int mid = (s + e) / 2;
+            merge(arr, src, s, mid);
+            merge(arr, src, mid + 1, e);
+
+            int p = s;
+            int q = mid + 1;
+            int i = p;
+
+            while (p <= mid || q <= e) {
+
+                int t = i;
+                if (q > e || (p <= mid && arr[p] < arr[q])) {
+                    src[i++] = arr[p++];
+                } else {
+                    src[i++] = arr[q++];
+                }
+            }
+
+            for (int idx = s; idx <= e; idx++) {
+                arr[idx] = src[idx];
+            }
+        }
+
+    }
 }
